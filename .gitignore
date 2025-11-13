@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+env/
+venv/
+*.conda
+*.yml
+
+# Cache
+*.log
+*.tmp
+*.DS_Store
+
+# Models & weights
+*.pt
+*.pth
+*.onnx
+
+# Videos
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Images (optional big outputs)
+*.png
+*.jpg
+*.jpeg
+
+# Datasets (DO NOT upload)
+data/
+datasets/
+*.zip
+*.tar
+*.gz
+
+# Ultralytics output
+runs/
+runs*/ 
+run_*/
