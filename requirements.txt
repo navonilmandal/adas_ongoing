@@ -1,0 +1,22 @@
+# Core ML + CV
+torch
+torchvision
+torchaudio
+ultralytics
+opencv-python
+numpy
+scipy
+pandas
+matplotlib
+
+# Tracking
+deep-sort-realtime
+
+# Utilities
+tqdm
+ruamel.yaml
+pyyaml
+
+# Optional (safe to include)
+cython
+filterpy
