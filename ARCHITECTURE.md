@@ -1,44 +1,60 @@
-flowchart LR
+```mermaid
+flowchart TB
 
-    A[Video / Camera Input] --> B[Frame Preprocessing]
+%% INPUT & PREPROCESSING
+A1[Video / Camera Input]
+A2[Frame Preprocessing]
+A3[Calibration & Homography]
 
-    B --> C{Per-frame Inference}
+A1 --> A2 --> A3
 
-    subgraph Inference
-        C1[YOLOv8 Detection]
-        C2[YOLOv8 Segmentation]
-        C3[Traffic Light Color Detector]
-    end
+%% INFERENCE
+B1[YOLOv8 Detection]
+B2[YOLOv8 Segmentation]
+B3[Traffic Light Detector]
 
-    C --> C1
-    C --> C2
-    C --> C3
+A3 --> B1
+A3 --> B2
+A3 --> B3
 
-    C --> D[Post-processing]
+%% POSTPROCESSING
+C1[Postprocessing & Geometry]
+B1 --> C1
+B2 --> C1
+B3 --> C1
 
-    D --> E[Tracking (DeepSORT)]
-    D --> F[Lane Detection + Hood Removal]
+%% TRACKING + LANE
+D1[DeepSORT Tracking]
+D2[Lane Detection]
 
-    E --> G[Speed & TTC Calculator]
-    F --> G
+C1 --> D1
+C1 --> D2
 
-    G --> H[Event Manager & Alarms]
+%% FUSION & METRICS
+E1[Track + Lane Fusion]
+E2[Speed & TTC Calculation]
 
-    H --> I[HUD Renderer]
+D1 --> E1
+D2 --> E1
+E1 --> E2
 
-    I --> J[Output Video / Frames]
-    H --> K[CSV / JSON Logs]
-    H --> L[Realtime API (REST/MQTT)]
+%% EVENTS & OUTPUT
+F1[Event Manager & Alarms]
+F2[HUD Renderer]
+F3[Output Video]
+F4[CSV / JSON Logs]
 
-    subgraph Training Pipeline
-        M[Raw IDD Dataset]
-        N[Augmentation & Preprocessing]
-        O[YOLOv8 Training (seg/det)]
-        P[Model Weights (best.pt)]
-    end
+E2 --> F1
+F1 --> F2 --> F3
+F1 --> F4
 
-    M --> N
-    N --> O
-    O --> P
-    P --> C1
-    P --> C2
+%% TRAINING PIPELINE (OFFLINE)
+T1[IDD Dataset]
+T2[Data Preparation]
+T3[Train YOLO Models]
+T4[Model Weights]
+
+T1 --> T2 --> T3 --> T4
+T4 --> B1
+T4 --> B2
+```
